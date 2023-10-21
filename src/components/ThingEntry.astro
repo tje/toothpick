@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { entry, next } = Astro.props
-const { title, description, image, nextLabel } = entry.data
+const { title, description, image, comment } = entry.data
 const { Content } = await entry.render()
 ---
 
@@ -58,7 +58,7 @@ const { Content } = await entry.render()
       <Content />
     </div>
     <div id="nav">
-      <a href={next}>{nextLabel}</a>
+      <a href={next}>{comment}</a>
     </div>
   </div>
 </body>

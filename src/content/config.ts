@@ -6,7 +6,7 @@ const things = defineCollection({
     title: z.string(),
     description: z.string(),
     image: image(),
-    nextLabel: z.string(),
+    comment: z.string(),
   }),
 })
 
