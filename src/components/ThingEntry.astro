@@ -25,22 +25,40 @@ const { Content } = await entry.render()
     imageUrl={new URL(image.src, Astro.url)}
   />
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
+      font-family: 'Segoe UI', 'Helvetica Neue', Tahoma, Geneva, Verdana, sans-serif;
     }
     #wrapper {
       display: flex;
       flex-direction: column;
       gap: 1em;
+      padding: 1em;
       place-content: center;
       place-items: center;
       min-height: 100vh;
     }
 
+    #content:empty {
+      display: none;
+    }
+
+    #nav {
+      text-align: center;
+    }
+
     .thing-image {
       max-width: 80vw;
       object-fit: contain;
-      height: auto;
+      height: 400px;
+    }
+
+    a.next {
+      color: dodgerblue;
+      color: LinkText;
     }
   </style>
 </head>
@@ -58,7 +76,7 @@ const { Content } = await entry.render()
       <Content />
     </div>
     <div id="nav">
-      <a href={next}>{comment}</a>
+      <a href={next} class="next">{comment}</a>
     </div>
   </div>
 </body>
