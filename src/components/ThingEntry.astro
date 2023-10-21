@@ -1,0 +1,65 @@
+---
+import { type CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import HeadMeta from '../components/HeadMeta.astro'
+
+interface Props {
+  entry: CollectionEntry<'things'>
+  next: string
+}
+
+const { entry, next } = Astro.props
+const { title, description, image, nextLabel } = entry.data
+const { Content } = await entry.render()
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <HeadMeta
+    title={title}
+    description={description}
+    imageUrl={new URL(image.src, Astro.url)}
+  />
+  <style>
+    body {
+      margin: 0;
+    }
+    #wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      place-content: center;
+      place-items: center;
+      min-height: 100vh;
+    }
+
+    .thing-image {
+      max-width: 80vw;
+      object-fit: contain;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <a href={next}>
+      <Image
+        src={image}
+        alt={description}
+        width={400}
+        class:list={['thing-image']}
+      />
+    </a>
+    <div id="content">
+      <Content />
+    </div>
+    <div id="nav">
+      <a href={next}>{nextLabel}</a>
+    </div>
+  </div>
+</body>
+</html>

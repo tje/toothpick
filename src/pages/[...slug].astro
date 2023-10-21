@@ -1,0 +1,31 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import ThingEntry from '../components/ThingEntry.astro'
+
+export async function getStaticPaths () {
+  const things = await getCollection('things')
+  return things.map((entry, idx) => {
+    const nextIdx = (idx + 1) % things.length
+    return {
+      params: {
+        slug: entry.slug,
+      },
+      props: {
+        next: things[nextIdx]!.slug,
+        entry,
+      },
+    }
+  })
+}
+
+interface Props {
+  entry: CollectionEntry<'things'>
+  next: string
+}
+
+const { entry, next } = Astro.props
+---
+<ThingEntry
+  entry={entry}
+  next={next}
+/>
