@@ -1,11 +1,10 @@
 ---
 import { getCollection } from 'astro:content'
 import ThingEntry from '../components/ThingEntry.astro'
-import { chooseRandom } from '../lib/utils'
 
 const things = await getCollection('things')
 
-const thing = chooseRandom(things)
+const thing = things.find((t) => t.id === 'toothpick.md')!
 const nextIdx = (things.indexOf(thing) + 1) % things.length
 const next = things[nextIdx]!
 ---
