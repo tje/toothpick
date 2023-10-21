@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content'
+import MainLayout from '../components/MainLayout.astro'
 import ThingEntry from '../components/ThingEntry.astro'
+import coverImage from '../images/cover.png'
 
 const things = await getCollection('things')
 
@@ -8,7 +10,13 @@ const thing = things.find((t) => t.id === 'toothpick.md')!
 const nextIdx = (things.indexOf(thing) + 1) % things.length
 const next = things[nextIdx]!
 ---
-<ThingEntry
-  entry={thing}
-  next={next.slug}
-/>
+<MainLayout
+  title="Put a toothpick in the charging port"
+  description="Doctors hate that shit"
+  imageUrl={new URL(coverImage.src, Astro.url)}
+>
+  <ThingEntry
+    entry={thing}
+    next={next.slug}
+  />
+</MainLayout>

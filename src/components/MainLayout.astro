@@ -1,0 +1,37 @@
+---
+import HeadMeta from './HeadMeta.astro'
+
+interface Props {
+  title: string
+  description: string
+  imageUrl?: URL | string
+}
+
+const { title, description, imageUrl } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <HeadMeta
+    title={title}
+    description={description}
+    imageUrl={imageUrl ?? ''}
+  />
+  <style is:global>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Helvetica Neue', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <slot />
+</body>
+</html>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content'
 import ThingEntry from '../components/ThingEntry.astro'
+import MainLayout from '../components/MainLayout.astro'
 
 export async function getStaticPaths () {
   const things = await getCollection('things')
@@ -24,8 +25,15 @@ interface Props {
 }
 
 const { entry, next } = Astro.props
+const { title, description, image } = entry.data
 ---
-<ThingEntry
-  entry={entry}
-  next={next}
-/>
+<MainLayout
+  title={title}
+  description={description}
+  imageUrl={new URL(image.src, Astro.url)}
+>
+  <ThingEntry
+    entry={entry}
+    next={next}
+  />
+</MainLayout>

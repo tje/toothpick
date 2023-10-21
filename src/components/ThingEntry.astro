@@ -1,7 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
-import HeadMeta from '../components/HeadMeta.astro'
 
 interface Props {
   entry: CollectionEntry<'things'>
@@ -9,77 +8,54 @@ interface Props {
 }
 
 const { entry, next } = Astro.props
-const { title, description, image, comment } = entry.data
+const { description, image, comment } = entry.data
 const { Content } = await entry.render()
 
 const nextUrl = new URL(`/${next}`, Astro.url)
 ---
+<style>
+  #wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    place-content: center;
+    place-items: center;
+    min-height: 100vh;
+  }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
-  <HeadMeta
-    title={title}
-    description={description}
-    imageUrl={new URL(image.src, Astro.url)}
-  />
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', 'Helvetica Neue', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    #wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-      padding: 1em;
-      place-content: center;
-      place-items: center;
-      min-height: 100vh;
-    }
+  #content:empty {
+    display: none;
+  }
 
-    #content:empty {
-      display: none;
-    }
+  #nav {
+    text-align: center;
+  }
 
-    #nav {
-      text-align: center;
-    }
+  .thing-image {
+    max-width: 80vw;
+    object-fit: contain;
+    height: 400px;
+  }
 
-    .thing-image {
-      max-width: 80vw;
-      object-fit: contain;
-      height: 400px;
-    }
-
-    a.next {
-      color: dodgerblue;
-      color: LinkText;
-    }
-  </style>
-</head>
-<body>
-  <div id="wrapper">
-    <a href={nextUrl}>
-      <Image
-        src={image}
-        alt={description}
-        width={400}
-        class:list={['thing-image']}
-      />
-    </a>
-    <div id="content">
-      <Content />
-    </div>
-    <div id="nav">
-      <a href={nextUrl} class="next">{comment}</a>
-    </div>
+  a.next {
+    color: dodgerblue;
+    color: LinkText;
+  }
+</style>
+<div id="wrapper">
+  <a href={nextUrl}>
+    <Image
+      src={image}
+      alt={description}
+      width={400}
+      class:list={['thing-image']}
+    />
+  </a>
+  <div id="content">
+    <Content />
   </div>
-</body>
-</html>
+  <div id="nav">
+    <a href={nextUrl} class="next">{comment}</a>
+  </div>
+</div>
