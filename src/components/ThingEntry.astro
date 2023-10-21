@@ -11,6 +11,8 @@ interface Props {
 const { entry, next } = Astro.props
 const { title, description, image, comment } = entry.data
 const { Content } = await entry.render()
+
+const nextUrl = new URL(next, Astro.url)
 ---
 
 <!DOCTYPE html>
@@ -64,7 +66,7 @@ const { Content } = await entry.render()
 </head>
 <body>
   <div id="wrapper">
-    <a href={next}>
+    <a href={nextUrl}>
       <Image
         src={image}
         alt={description}
@@ -76,7 +78,7 @@ const { Content } = await entry.render()
       <Content />
     </div>
     <div id="nav">
-      <a href={next} class="next">{comment}</a>
+      <a href={nextUrl} class="next">{comment}</a>
     </div>
   </div>
 </body>
